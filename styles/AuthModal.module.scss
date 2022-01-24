@@ -1,0 +1,19 @@
+.modal {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #000;
+    opacity: 0.3;
+  }
+  &__container {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateY(-30%) translateX(-50%);
+    opacity: 1;
+  }
+}
