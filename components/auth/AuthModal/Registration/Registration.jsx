@@ -5,12 +5,16 @@ import {Formik, Form} from 'formik'
 import * as Yup from 'yup';
 import Radio from '../../Radio'
 import {Grid} from '@material-ui/core'
-import styles from '../../../../styles/Registration.module.scss';
+import {useDispatch} from 'react-redux' 
+import {regThunk} from '../../../../store/reducers/userReducer'
 
 
 
 
 function Registration(props) {
+
+  const dispatch = useDispatch()
+
   const initialValues = {
     email: '',
     password: '',
@@ -31,6 +35,10 @@ function Registration(props) {
         validationSchema={validationSchema}
         onSubmit={values => {
           console.log(values)
+          dispatch(regThunk({
+            email: values.email, 
+            password: values.password
+          }))
           props.setIsVisibleModal(false)
         }}
       >

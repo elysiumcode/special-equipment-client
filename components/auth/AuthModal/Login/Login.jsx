@@ -5,10 +5,13 @@ import {Formik, Form} from 'formik'
 import * as Yup from 'yup';
 import Checkbox from '../../Checkbox'
 import {Grid} from '@material-ui/core'
-import styles from '../../../../styles/Login.module.scss';
+import {useDispatch} from 'react-redux' 
+import {loginThunk} from '../../../../store/reducers/userReducer'
 
 
 function Login(props) {
+
+  const dispatch = useDispatch()
 
   const initialValues = {
     email: '',
@@ -28,6 +31,10 @@ function Login(props) {
         validationSchema={validationSchema}
         onSubmit={values => {
           console.log(values)
+          dispatch(loginThunk({
+            email: values.email,
+            password: values.password
+          }))
           props.setIsVisibleModal(false)
         }}
       >

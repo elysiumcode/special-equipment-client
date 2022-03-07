@@ -56,6 +56,8 @@ export default function AuthModal(props) {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+
+
   
 
   return (

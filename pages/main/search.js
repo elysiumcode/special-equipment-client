@@ -10,6 +10,9 @@ import Select from '../../components/auth/Select'
 import Date from '../../components/main/Date'
 import DocContainer from '../../components/DocContainer'
 import AccountContainer from '../../components/AccountContainer'
+import OrdersContainer from '../../components/main/OrdersContainer';
+import {useDispatch, useSelector} from "react-redux";
+import {getAllOrdersThunk} from "../../store/reducers/ordersReducer";
 
 
 
@@ -44,6 +47,16 @@ function Search() {
     number: Yup.number().integer().required('Номер обязателен!'),
     machineType: Yup.string().required('Тип обязателен!')
   })
+
+
+  const dispatch = useDispatch()
+  const allOrders = useSelector(state => state.orders.allOrders)
+
+  const showAllHandler = () => {
+    dispatch(getAllOrdersThunk())
+  }
+
+
 
   return (
     <DocContainer>
@@ -100,16 +113,20 @@ function Search() {
                     />
                   </Grid>
                   <Box sx={{
-                    width: "70%",
+                    width: "50%",
                     heigth: 10
-                  }}></Box>
+                  }}/>
                   <Grid item xs={3}>
                     <Button>Найти</Button>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <Button onClick={showAllHandler}>Показать все</Button>
                   </Grid>
                 </Grid>
               </Form>
             </Formik>
           </div>
+          <OrdersContainer orders={allOrders}/>
         </div>
       </AccountContainer>
     </DocContainer>

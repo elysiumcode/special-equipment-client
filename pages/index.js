@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import Image from 'next/image'
+import {useRouter} from 'next/router'
+import {useEffect} from 'react'
+import {useSelector} from 'react-redux'
 
 import styles from '../styles/index.module.scss';
 import authLogo from '../assets/images/auth-logo.png'
@@ -7,9 +10,24 @@ import authArrow from '../assets/images/auth-arrow.png'
 import AuthModal from '../components/auth/AuthModal/AuthModal'
 import MainForm from '../components/MainForm'
 import MainContainer from '../components/DocContainer'
+import {authThunk} from '../store/reducers/userReducer'
+import { useDispatch } from 'react-redux'
+
 
 export default function Home() {
   const [isVisibleModal, setIsVisibleModal] = useState(false)
+
+  const dispatch = useDispatch()
+  const auth = useSelector(state => state.user.auth)
+  const router = useRouter()
+  
+  useEffect(() => {
+    dispatch(authThunk())
+    console.log('useEffect')
+    if(auth) {
+      router.push('/main/cabinet')
+    }
+  })
 
   return (
     <MainContainer>

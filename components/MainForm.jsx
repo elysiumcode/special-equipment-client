@@ -2,10 +2,12 @@ import React, {useState} from 'react'
 import {Grid, Typography, Box} from '@material-ui/core'
 import {Formik, Form} from 'formik'
 import * as Yup from 'yup';
+import {useDispatch} from 'react-redux'
 import TextField from '../components/auth/TextField'
 import Button from '../components/auth/Button'
 import Select from '../components/auth/Select'
 import AdditionalFields from '../components/auth/additionalFields'
+import {addOrderThunk} from '../store/reducers/ordersReducer'
 
 function MainForm({variant}) {
 
@@ -23,7 +25,8 @@ function MainForm({variant}) {
   ]
 
 
-  let [cart, setCart] = useState([])
+
+  const dispatch = useDispatch()
   const [currentType, setCurrentType] = useState(null)
   const [isVisibleModal, setIsVisibleModal] = useState(false)
 
@@ -55,6 +58,13 @@ function MainForm({variant}) {
   })
 
 
+  const makePayload = (obj) => {
+    const {fullName, phone, email, time, address, payWay, ...desc} = obj
+    console.log(desc)
+    dispatch(addOrderThunk({fullName, phone, email, time, address, payWay, desc}))
+  }
+
+
   return (
     <Formik
             initialValues={{
@@ -62,8 +72,7 @@ function MainForm({variant}) {
             }}
             validationSchema={formValidation}
             onSubmit={values => {
-              console.log(values)
-              setCart([...cart, values])
+              makePayload(values)
             }}
           >
             <Form>
@@ -116,7 +125,7 @@ function MainForm({variant}) {
                   <Button call={'add'}>ДОБАВИТЬ</Button>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button call={'submit'} onClick={() => console.log(cart)}>ОТПРАВИТЬ</Button>
+                  <Button call={'submit'}>ОТПРАВИТЬ</Button>
                 </Grid>
               </Grid>
             </Form>

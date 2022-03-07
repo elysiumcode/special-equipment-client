@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Logo from '../assets/images/main-logo.png'
 import Logout from '../assets/images/main-logout.png'
 import Change from '../assets/images/main-change.png'
@@ -6,6 +6,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/main.module.scss';
 import {useRouter} from 'next/router';
+import { useDispatch, useSelector } from 'react-redux'
+import {authThunk} from '../store/reducers/userReducer'
+import {logout} from '../store/reducers/userReducer'
 
 
 function Main({ children }) {
@@ -14,49 +17,63 @@ function Main({ children }) {
     search: 'Поиск заявок',
     create: 'Создать новую заявку',
     cabinet: 'Личный кабинет',
-    trans: 'Мои транзакции',
-    apps: 'Мои заявки'
+    myorders: 'Мои заявки'
   }
 
-  const router = useRouter();
-  const query = router.pathname.split('/')[2];
-  console.log(query)
+  const auth = useSelector(state => state.user.auth)
+  const dispatch = useDispatch()
+  const router = useRouter()
+
   const [activeRole, setActiveRole] = useState(0)
-  const [activeNav, setActiveNav] = useState(query);
+  const [activeNav, setActiveNav] = useState(router.pathname.split('/')[2] || 'cabinet')
+
+  useEffect(() => {
+    dispatch(authThunk())
+    console.log(router)
+    if(!auth) {
+      router.push('/')
+    }
+  }, [])
+
+
+  const logoutHandler = () => {
+    dispatch(logout())
+    router.push('/')
+  }
 
 
   return (
-    <div className={styles.mainPage}>
-      <div className={styles.main__header}>
-        <div className={styles.logo}>
+    <div className={styles["main-page"]}>
+      <div className={styles["main__header"]}>
+        <div className={styles["logo"]}>
           <Image src={Logo} alt="logo" />
         </div>
-        <div className={styles.profile}>
+        <div className={styles["profile"]}>
           <span>Роль:</span>
           <span
-            className={`role ${activeRole === 0 ? 'active' : ''}`}
+            className={activeRole === 0 ? styles["role--active"] : styles["role"]}
             onClick={() => setActiveRole(0)}
           >Заказчик</span>
           <Image src={Change} alt="change" />
           <span
-            className={`role ${activeRole === 1 ? 'active' : ''}`}
+            className={activeRole === 1 ? styles["role--active"] : styles["role"]}
             onClick={() => setActiveRole(1)}
           >Исполнитель</span>
         </div>
-        <div className={styles.logout}>
-          <div className={styles.logout__ImageContainer}>
-            <Image src={Logout} alt="logout" />
+        <div className={styles["logout"]}>
+          <div className={styles["logout__img-container"]}>
+            <Image src={Logout} alt="logout" onClick={logoutHandler}/>
           </div>
         </div>
       </div>
-      <div className={styles.main__container}>
-        <div className={styles.main__nav}>
-          <div className={styles.main__nav__links}>
+      <div className={styles["main__container"]}>
+        <div className={styles["main__nav"]}>
+          <div className={styles["main__nav__links"]}>
             {Object.keys(nav).map(key => (
               <Link href={`/main/${key}`}>
                 <div
                   key={key}
-                  className={`${styles.link} ${key === activeNav ? styles.active : ''}`}
+                  className={key === activeNav ? styles["link--active"] : styles["link"]}
                   onClick={() => setActiveNav(key)}
                 >
                   <span>{nav[key]}</span>
@@ -65,7 +82,7 @@ function Main({ children }) {
             ))}
           </div>
         </div>
-        <div className={styles.main__content}>
+        <div className={styles["main__content"]}>
           {children}
         </div>
       </div>

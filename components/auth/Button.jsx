@@ -7,17 +7,13 @@ const ButtonWrapper = ({
   variant,
   color,
   size,
-  call,
   onClick,
 }) => {
   const { submitForm } = useFormikContext();
 
   const handleSubmit = () => {
-    if(call == 'add') {
-      submitForm();
-    } else if(call == 'submit') {
-      onClick()
-    } else submitForm()
+    console.log(1)
+    submitForm()
   }
 
   const configButton = {
