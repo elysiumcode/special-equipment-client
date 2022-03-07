@@ -1,6 +1,11 @@
 {
   "name": "client-next",
   "private": true,
+  "engines": {
+    "node": "16.x",
+    "npm": "6.x"
+  },
+
   "scripts": {
     "dev": "next dev",
     "build": "next build",

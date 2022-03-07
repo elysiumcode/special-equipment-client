@@ -70,9 +70,8 @@ function Main({ children }) {
         <div className={styles["main__nav"]}>
           <div className={styles["main__nav__links"]}>
             {Object.keys(nav).map(key => (
-              <Link href={`/main/${key}`}>
+              <Link href={`/main/${key}`} key={key}>
                 <div
-                  key={key}
                   className={key === activeNav ? styles["link--active"] : styles["link"]}
                   onClick={() => setActiveNav(key)}
                 >
