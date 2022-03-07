@@ -1,0 +1,1 @@
+export const apiUrl = 'https://vehicomp-server.herokuapp.com/api/'

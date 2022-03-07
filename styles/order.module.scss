@@ -1,0 +1,25 @@
+.order {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 10px;
+  background-color: lighten(#303f9f, 10%);
+  border-radius: 30px;
+  margin-top: 50px;
+  padding: 30px;
+  color: #ffffff;
+
+  &__name {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  &__email {
+    margin-left: 30px;
+  }
+
+  &__phone {
+    margin-left: 30px;
+  }
+
+
+}
