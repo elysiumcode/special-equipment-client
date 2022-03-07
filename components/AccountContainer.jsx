@@ -11,7 +11,7 @@ import {authThunk} from '../store/reducers/userReducer'
 import {logout} from '../store/reducers/userReducer'
 
 
-function Main({ children }) {
+function AccountContainer({ children }) {
 
   const nav = {
     search: 'Поиск заявок',
@@ -89,4 +89,4 @@ function Main({ children }) {
   )
 }
 
-export default Main
+export default AccountContainer
