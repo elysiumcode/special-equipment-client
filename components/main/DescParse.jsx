@@ -20,8 +20,8 @@ const DescParse = ({desc}) => {
 
     return (
         <div>
-            {Object.keys(descJson).map(key => (
-                <p>{parseDescKeys[key]}: {descJson[key]}</p>
+            {Object.keys(descJson).map((key, i) => (
+                <p key={i}>{parseDescKeys[key]}: {descJson[key]}</p>
             ))}
         </div>
     );

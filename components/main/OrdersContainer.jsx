@@ -1,9 +1,4 @@
 import Order from './Order'
-import {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {getUserOrdersThunk} from "../../store/reducers/ordersReducer";
-
-
 
 function OrdersContainer({orders}) {
 
@@ -11,6 +6,7 @@ function OrdersContainer({orders}) {
         <div className="orders__container">
             {orders.map(order => (
                 <Order
+                    key={order.name}
                     name={order.name}
                     phone={order.phone}
                     email={order.email}
